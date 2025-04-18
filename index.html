@@ -44,6 +44,16 @@
       font-size: 90%;
     }
 
+    .error {
+      color: red;
+      margin-top: 1em;
+    }
+
+    .success {
+      color: green;
+      margin-top: 1em;
+    }
+
     .good-contrast-text {
       background-color: rgba(255, 100, 100, 0.5);
       padding: 5px;
@@ -153,6 +163,42 @@
       <input type="text" id="readonlyField" name="readonlyField" disabled="disabled" value="This is read-only" readonly>
     </p>
 
+    <p>
+    <h1>File Upload (Dummy)</h1>
+    <form id="uploadForm"> <label for="fileInput">Choose a file:</label><br>
+      <input type="file" id="fileInput" name="file"><br><br> <button id="uploadButton" type="button">Upload
+        File</button>
+    </form>
+    <div id="message"></div>
+
+    <script>
+      // Allowed file extensions 
+      const allowedExtensions = ["pdf", "jpg", "jpeg", "png"];
+      // Disallowed file extensions (specifically .bat and .exe) 
+      const disallowedExtensions = ["bat", "exe"];
+      document.getElementById('uploadButton').addEventListener('click', function () {
+        const fileInput = document.getElementById('fileInput');
+        const messageDiv = document.getElementById('message'); // Clear any previous messages 
+        messageDiv.textContent = ""; messageDiv.className = "";
+        if (fileInput.files.length === 0) {
+          messageDiv.textContent = "Please choose a file first!";
+          messageDiv.className = "error";
+          return;
+        }
+        const fileName = fileInput.files[0].name; const fileExt = fileName.split('.').pop().toLowerCase(); // Check for disallowed extensions and unsupported formats 
+        if (disallowedExtensions.includes(fileExt) || !allowedExtensions.includes(fileExt)) {
+          messageDiv.textContent = "Unsupported file type. Only PDF, JPG, JPEG, and PNG files are supported.";
+          messageDiv.className = "error";
+          // Optionally clear the file input if the file is invalid. 
+          fileInput.value = "";
+          return;
+        }
+        // Dummy upload process (simulate success) 
+        messageDiv.textContent = "File upload simulated. File: " + fileName; messageDiv.className = "success"; // Optionally clear the file input after a successful dummy upload 
+        fileInput.value = "";
+      }); 
+    </script>
+    </p>
     <hr>
 
     <h2>Combobox / Dropdown</h2>
