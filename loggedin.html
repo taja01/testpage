@@ -4,11 +4,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>Logged In</title>
-
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -48,51 +47,97 @@
       padding: 8px;
       margin: 6px 0;
     }
-  </style>
 
+    /* Style for the status message */
+    .status-message {
+      color: #155724;
+      background-color: #d4edda;
+      border: 1px solid #c3e6cb;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 4px;
+      width: fit-content;
+    }
+  </style>
   <script>
-    // Define getCookie to check for login cookie.
+    // Function to get a cookie value by name. 
     function getCookie(cname) {
       let name = cname + "=";
       let decodedCookie = decodeURIComponent(document.cookie);
       let ca = decodedCookie.split(";");
+
       for (let i = 0; i < ca.length; i++) {
         let c = ca[i].trim();
+
         if (c.indexOf(name) === 0) {
           return c.substring(name.length, c.length);
         }
-      }
-      return "";
+      } return "";
     }
+    // Function to display the status message and then remove it after 3 seconds.
+    function displayStatusMessage(message) {
+      const statusMessage = document.createElement("div");
+      statusMessage.className = "status-message";
+      statusMessage.innerText = message;
 
-    // On window load, display a welcome message if the cookie is found.
-    window.onload = function () {
-      var user = getCookie("loggedInUser");
+      // Append the message div inside the container. 
+      const container = document.querySelector(".messages");
+      container.innerHTML = "";
+      container.appendChild(statusMessage);
+
+      // Remove after 3 seconds. 
+      setTimeout(function () {
+        statusMessage.remove();
+      }, 3000);
+    } window.onload = function () {
+
+      // Check if user is logged in via cookie. 
+      const user = getCookie("loggedInUser");
       if (user !== "") {
-        document.getElementById("welcomeMessage").innerText =
-          "Welcome, " + user + "!";
-      } else {
-        // If no cookie exists, redirect to the login page.
+        document.getElementById("welcomeMessage").innerText = "Welcome, " + user + "!";
+      }
+      else {
         window.location.href = "login.html";
       }
 
-      // Attach event listener to the form.
-      document
-        .getElementById("dummyForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault(); // Prevent actual submission.
-          console.log("Submit done");
-          const inputField = document.getElementById('dummyInput');
-          inputField.value = "";
-        });
+      const inputField = document.getElementById("dummyInput");
+      const submitButton = document.querySelector('input[type="submit"]');
+
+      // Initially disable the submit button if input field is empty.
+
+      if (inputField.value.trim() === "") {
+        submitButton.disabled = true;
+      }
+
+      // Add an event to enable/disable the submit button based on input.
+      inputField.addEventListener("input", function () {
+        if (inputField.value.trim() === "") {
+          submitButton.disabled = true;
+        } else {
+          submitButton.disabled = false;
+        }
+      });
+
+      // Attach event listener to the form for submission. 
+      // Prevent form submission. 
+      document.getElementById("dummyForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        // Clear the input field. 
+        inputField.value = "";
+        // Disable submit button again since input is now empty. 
+        submitButton.disabled = true;
+
+
+        // Show the success message. 
+        displayStatusMessage("Message has been sent");
+      });
     };
   </script>
 </head>
 
 <body>
-  <div class="navbar">
-    <a href="index.html">Home</a> <a href="login.html">Login</a>
-  </div>
+  <div class="navbar"> <a href="index.html">Home</a> <a href="login.html">Login</a> </div>
   <div class="container">
     <h1 id="welcomeMessage">Welcome!</h1>
     <p>You have successfully logged in.</p>
@@ -101,12 +146,11 @@
     <form id="dummyForm">
       <label for="dummyInput">Enter something:</label><br />
       <input type="text" id="dummyInput" name="dummyInput" placeholder="Type here..." /><br />
-      <input type="submit" value="Submit" />
+      <input type="submit" value="Submit" disabled />
     </form>
-    <p>
-      Check your browser's console for the log message when you submit the
-      form.
-    </p>
+
+    <p>After clicking submit, a status message will appear for 3 seconds.</p>
+    <div class="messages"></div>
   </div>
 </body>
 
