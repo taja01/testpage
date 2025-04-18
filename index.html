@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Main Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Navbar styling */
+    .navbar {
+      background-color: #333;
+      overflow: hidden;
+    }
+
+    .navbar a {
+      float: left;
+      display: block;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 20px;
+      text-decoration: none;
+    }
+
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .input-error {
+      color: red;
+      font-size: 90%;
+    }
+
+    .good-contrast-text {
+      background-color: rgba(255, 100, 100, 0.5);
+      padding: 5px;
+    }
+
+    .bad-contrast-text {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 5px;
+    }
+  </style>
+
+  <script> // Counter for list items 
+    let listItemCount = 0;
+
+    // Button functions
+    function showAlert() {
+      alert("This is a triggered alert from the Main Page!");
+    }
+
+    function extendList() {
+      listItemCount++;
+      const list = document.getElementById("dynamicList");
+      const newItem = document.createElement("li");
+      newItem.innerText = "Dynamic Item " + listItemCount;
+      list.appendChild(newItem);
+    }
+
+    function removeLastItem() {
+      const list = document.getElementById("dynamicList");
+      const items = list.getElementsByTagName("li");
+      if (items.length > 0) {
+        list.removeChild(items[items.length - 1]);
+        listItemCount--;
+      }
+    }
+
+    // Validate input field to allow english letters, numbers and common punctuation only.
+    // If non english letters (outside basic ASCII letters) are detected, display an error.
+    function validateEnglishInput() {
+      const inputField = document.getElementById("englishInput");
+      const errorDiv = document.getElementById("validationError");
+      // This regex allows letters (a-z, A-Z), numbers, spaces and a few punctuation marks.
+      // Adjust the regex as needed.
+      const regex = /^[A-Za-z0-9\s.,!?'"]*$/;
+
+      if (!regex.test(inputField.value)) {
+        errorDiv.innerText = "Error: Please use only English letters, numbers, and punctuation!";
+      } else {
+        errorDiv.innerText = "";
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div class="navbar"> <a href="index.html">Home</a> <a href="login.html">Login</a> </div>
+
+
+  <div class="container">
+    <h1>Main Page</h1>
+
+    <h2>Buttons</h2>
+    <p>
+      <button id="alertButton" onclick="showAlert()">Show Alert</button>
+      <button id="extendListItemButton" onclick="extendList()">Extend the List</button>
+      <button id="removeListItemButton" onclick="removeLastItem()">Remove Last Item</button>
+      <button id="generateErrorButton" onclick="generateErrorInConsole()">Are you happy?</button>
+    </p>
+
+    <h3>Dynamic List</h3>
+    <ul id="dynamicList">
+      <!-- New items will be appended here -->
+    </ul>
+
+    <hr>
+
+    <h2>Checkboxes</h2>
+    <p>
+      <input type="checkbox" id="checkbox1" name="checkbox1">
+      <label for="checkbox1">Option 1</label><br>
+      <input type="checkbox" id="checkbox2" name="checkbox2">
+      <label for="checkbox2">Option 2</label><br>
+      <input type="checkbox" id="checkbox3" name="checkbox3">
+      <label for="checkbox3">Option 3</label>
+    </p>
+
+    <h2>Radio Buttons</h2>
+    <p>
+      <input type="radio" id="radio1" name="radios" value="A">
+      <label for="radio1">Radio A</label><br>
+      <input type="radio" id="radio2" name="radios" value="B">
+      <label for="radio2">Radio B</label><br>
+      <input type="radio" id="radio3" name="radios" value="C">
+      <label for="radio3">Radio C</label>
+    </p>
+
+    <hr>
+
+    <h2>Input Fields</h2>
+    <p>
+      <label for="englishInput">Text (only English letters accepted): </label><br>
+      <input type="text" id="englishInput" name="englishInput" oninput="validateEnglishInput()">
+      <span id="validationError" class="input-error"></span>
+    </p>
+    <p>
+      <label for="readonlyField">Read-Only Field: </label><br>
+      <input type="text" id="readonlyField" name="readonlyField" disabled="disabled" value="This is read-only" readonly>
+    </p>
+
+    <hr>
+
+    <h2>Combobox / Dropdown</h2>
+    <p>
+      <select id="languageSelector" title="Select Language">
+        <option value="">Please choose an option</option>
+        <option value="option1">English</option>
+        <option value="option2">German</option>
+        <option value="option3">Hungarian</option>
+      </select>
+    </p>
+
+    <h2>Listbox</h2>
+    <p>
+      <!-- Listbox via a select with size attribute -->
+      <select id="listbox" size="4">
+        <option>Listbox Item 1</option>
+        <option>Listbox Item 2</option>
+        <option>Listbox Item 3</option>
+        <option>Listbox Item 4</option>
+      </select>
+    </p>
+
+    <h2>ListView</h2>
+    <p>
+      <!-- ListView using a select with multiple attribute -->
+      <select id="listview" multiple size="4">
+        <option>ListView Item 1</option>
+        <option>ListView Item 2</option>
+        <option>ListView Item 3</option>
+        <option>ListView Item 4</option>
+      </select>
+    </p>
+
+    <h2>Slider</h2>
+    <p>
+    <div>
+      <label for="mySlider">Select Value:</label>
+      <input type="range" id="mySlider" name="mySlider" min="0" max="100" value="50">
+      <output id="sliderValue" for="mySlider">50</output>
+    </div>
+    <script>
+      const slider = document.getElementById('mySlider');
+      const output = document.getElementById('sliderValue');
+
+      output.textContent = slider.value;
+
+      slider.addEventListener('input', function () {
+
+        output.textContent = this.value;
+      });
+    </script>
+    </p>
+
+    <hr>
+
+    <h2>Text with Different Background</h2>
+    <p class="good-contrast-text">
+      This block uses a semitransparent background color (rgba) to test text readability.
+    </p>
+    <p class="bad-contrast-text">
+      This block uses a semitransparent background color (rgba) to test text readability.
+    </p>
+
+  </div>
+</body>
+
+</html>
