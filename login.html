@@ -106,6 +106,8 @@
 					// Valid login: Set a cookie (expires in 1 day) and redirect to loggedin.html
 					setCookie("loggedInUser", email, 1);
 					window.location.href = "loggedin.html";
+				} else if (email === "user@user.com" && password === "user") {
+					console.error("Oh boy you find me.");
 				} else {
 					errorDiv.innerHTML = "Invalid email or password!";
 				}

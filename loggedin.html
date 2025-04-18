@@ -82,6 +82,8 @@
         .addEventListener("submit", function (e) {
           e.preventDefault(); // Prevent actual submission.
           console.log("Submit done");
+          const inputField = document.getElementById('dummyInput');
+          inputField.value = "";
         });
     };
   </script>
