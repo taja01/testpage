@@ -43,6 +43,15 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    sections.forEach((section, index) => {
+        // You can base the id on the header text or simply use the index. 
+        // // Example using index: 
+        section.setAttribute("data-testid", "section-" + (index + 1)); // Or, if you want to use the header text (lowercase, no spaces): 
+        const headerText = section.querySelector(".section-header").textContent.trim();
+        const cleanText = headerText.toLowerCase().replace(/\s+/g, "-");
+        section.setAttribute("data-testid", cleanText);
+    });
+
     // File upload functionality 
     const allowedExtensions = ["pdf", "jpg", "jpeg", "png"];
     const disallowedExtensions = ["bat", "exe"];
