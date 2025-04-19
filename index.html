@@ -63,12 +63,29 @@
       background-color: rgba(0, 0, 0, 0.7);
       padding: 5px;
     }
-  </style>
 
-  <script> // Counter for list items 
+    /* Style the collapsible header */
+    .section-header {
+      background: #eee;
+      padding: 10px;
+      margin: 0 -20px;
+      cursor: pointer;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .section-header:hover {
+      background: #ddd;
+    }
+
+    .section-content {
+      padding: 15px 20px;
+      border: 1px solid #ccc;
+      border-top: none;
+    }
+  </style>
+  <script> // General functions available globally 
     let listItemCount = 0;
 
-    // Button functions
     function showAlert() {
       alert("This is a triggered alert from the Main Page!");
     }
@@ -90,15 +107,16 @@
       }
     }
 
-    // Validate input field to allow english letters, numbers and common punctuation only.
-    // If non english letters (outside basic ASCII letters) are detected, display an error.
+    function generateErrorInConsole() {
+      console.error("Generated error: Are you happy?");
+    }
+
+    // Validate to allow English letters, numbers and common punctuation
     function validateEnglishInput() {
       const inputField = document.getElementById("englishInput");
       const errorDiv = document.getElementById("validationError");
-      // This regex allows letters (a-z, A-Z), numbers, spaces and a few punctuation marks.
-      // Adjust the regex as needed.
+      // Only allow basic ASCII letters, numbers, spaces and a few punctuation marks.
       const regex = /^[A-Za-z0-9\s.,!?'"]*$/;
-
       if (!regex.test(inputField.value)) {
         errorDiv.innerText = "Error: Please use only English letters, numbers, and punctuation!";
       } else {
@@ -115,155 +133,227 @@
   <div class="container">
     <h1>Main Page</h1>
 
-    <h2>Buttons</h2>
-    <p>
-      <button id="alertButton" onclick="showAlert()">Show Alert</button>
-      <button id="extendListItemButton" onclick="extendList()">Extend the List</button>
-      <button id="removeListItemButton" onclick="removeLastItem()">Remove Last Item</button>
-      <button id="generateErrorButton" onclick="generateErrorInConsole()">Are you happy?</button>
-    </p>
+    <!-- Section 1: Buttons -->
+    <section class="collapsible-section">
+      <h2 class="section-header">Buttons</h2>
+      <div class="section-content">
+        <p>
+          <button id="alertButton" onclick="showAlert()">Show Alert</button>
+          <button id="extendListItemButton" onclick="extendList()">Extend the List</button>
+          <button id="removeListItemButton" onclick="removeLastItem()">Remove Last Item</button>
+          <button id="generateErrorButton" onclick="generateErrorInConsole()">Are you happy?</button>
+        </p>
+        <h3>Dynamic List</h3>
+        <ul id="dynamicList">
+          <!-- New items will be appended here -->
+        </ul>
+      </div>
+    </section>
 
-    <h3>Dynamic List</h3>
-    <ul id="dynamicList">
-      <!-- New items will be appended here -->
-    </ul>
+    <!-- Section 2: Checkboxes -->
+    <section class="collapsible-section">
+      <h2 class="section-header">Checkboxes</h2>
+      <div class="section-content">
+        <p>
+          <input type="checkbox" id="checkbox1" name="checkbox1">
+          <label for="checkbox1">Option 1</label><br>
+          <input type="checkbox" id="checkbox2" name="checkbox2">
+          <label for="checkbox2">Option 2</label><br>
+          <input type="checkbox" id="checkbox3" name="checkbox3">
+          <label for="checkbox3">Option 3</label>
+        </p>
+      </div>
+    </section>
 
-    <hr>
+    <!-- Section 3: Radio Buttons -->
+    <section class="collapsible-section">
+      <h2 class="section-header">Radio Buttons</h2>
+      <div class="section-content">
+        <p>
+          <input type="radio" id="radio1" name="radios" value="A">
+          <label for="radio1">Radio A</label><br>
+          <input type="radio" id="radio2" name="radios" value="B">
+          <label for="radio2">Radio B</label><br>
+          <input type="radio" id="radio3" name="radios" value="C">
+          <label for="radio3">Radio C</label>
+        </p>
+      </div>
+    </section>
 
-    <h2>Checkboxes</h2>
-    <p>
-      <input type="checkbox" id="checkbox1" name="checkbox1">
-      <label for="checkbox1">Option 1</label><br>
-      <input type="checkbox" id="checkbox2" name="checkbox2">
-      <label for="checkbox2">Option 2</label><br>
-      <input type="checkbox" id="checkbox3" name="checkbox3">
-      <label for="checkbox3">Option 3</label>
-    </p>
+    <!-- Section 4: Input Fields -->
+    <section class="collapsible-section">
+      <h2 class="section-header">Input Fields</h2>
+      <div class="section-content">
+        <p>
+          <label for="englishInput">Text (only English letters accepted): </label><br>
+          <input type="text" id="englishInput" name="englishInput" oninput="validateEnglishInput()">
+          <span id="validationError" class="input-error"></span>
+        </p>
+        <p>
+          <label for="readonlyField">Read-Only Field: </label><br>
+          <input type="text" id="readonlyField" name="readonlyField" disabled value="This is read-only" readonly>
+        </p>
+        <p>
+          <label for="story">Tell us your story:</label><br>
+          <textarea id="story" name="story" rows="5" cols="33">It was a dark and stormy night...</textarea>
+        </p>
+      </div>
+    </section>
 
-    <h2>Radio Buttons</h2>
-    <p>
-      <input type="radio" id="radio1" name="radios" value="A">
-      <label for="radio1">Radio A</label><br>
-      <input type="radio" id="radio2" name="radios" value="B">
-      <label for="radio2">Radio B</label><br>
-      <input type="radio" id="radio3" name="radios" value="C">
-      <label for="radio3">Radio C</label>
-    </p>
+    <!-- Section 5: File Upload (Dummy) -->
+    <section class="collapsible-section">
+      <h2 class="section-header">File Upload (Dummy)</h2>
+      <div class="section-content">
+        <form id="uploadForm">
+          <label for="fileInput">Choose a file:</label><br>
+          <input type="file" id="fileInput" name="file"><br><br>
+          <button id="uploadButton" type="button">Upload File</button>
+        </form>
+        <div id="message"></div>
+      </div>
+    </section>
 
-    <hr>
+    <!-- Section 6: Anchors elements -->
+    <section class="collapsible-section">
+      <h2 class="section-header">Anchors elements</h2>
+      <div class="section-content">
+        <label for="anchor">Contacts</label>
+        <ul id="anchor">
+          <li><a href="https://example.com">Website</a></li>
+          <li><a href="mailto:m.bluth@example.com">Email</a></li>
+          <li><a href="tel:+123456789">Phone</a></li>
+        </ul>
+      </div>
+    </section>
 
-    <h2>Input Fields</h2>
-    <p>
-      <label for="englishInput">Text (only English letters accepted): </label><br>
-      <input type="text" id="englishInput" name="englishInput" oninput="validateEnglishInput()">
-      <span id="validationError" class="input-error"></span>
-    </p>
-    <p>
-      <label for="readonlyField">Read-Only Field: </label><br>
-      <input type="text" id="readonlyField" name="readonlyField" disabled="disabled" value="This is read-only" readonly>
-    </p>
+    <!-- Section 7: Combobox / Dropdown -->
+    <section class="collapsible-section">
+      <h2 class="section-header">Combobox / Dropdown</h2>
+      <div class="section-content">
+        <p>
+          <select id="languageSelector" title="Select Language">
+            <option value="">Please choose an option</option>
+            <option value="option1">English</option>
+            <option value="option2">German</option>
+            <option value="option3">Hungarian</option>
+          </select>
+        </p>
+      </div>
+    </section>
 
-    <p>
-    <h1>File Upload (Dummy)</h1>
-    <form id="uploadForm"> <label for="fileInput">Choose a file:</label><br>
-      <input type="file" id="fileInput" name="file"><br><br> <button id="uploadButton" type="button">Upload
-        File</button>
-    </form>
-    <div id="message"></div>
+    <!-- Section 8: Listbox -->
+    <section class="collapsible-section">
+      <h2 class="section-header">Listbox</h2>
+      <div class="section-content">
+        <p>
+          <select id="listbox" size="4" title="list box example">
+            <option>Listbox Item 1</option>
+            <option>Listbox Item 2</option>
+            <option>Listbox Item 3</option>
+            <option>Listbox Item 4</option>
+          </select>
+        </p>
+      </div>
+    </section>
 
-    <script>
-      // Allowed file extensions 
+    <!-- Section 9: ListView -->
+    <section class="collapsible-section">
+      <h2 class="section-header">ListView</h2>
+      <div class="section-content">
+        <p>
+          <select id="listview" multiple size="4" title="list view example">
+            <option>ListView Item 1</option>
+            <option>ListView Item 2</option>
+            <option>ListView Item 3</option>
+            <option>ListView Item 4</option>
+          </select>
+        </p>
+      </div>
+    </section>
+
+    <!-- Section 10: Slider -->
+    <section class="collapsible-section">
+      <h2 class="section-header">Slider</h2>
+      <div class="section-content">
+        <div>
+          <label for="mySlider">Select Value:</label>
+          <input type="range" id="mySlider" name="mySlider" min="0" max="100" value="50">
+          <output id="sliderValue" for="mySlider">50</output>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 11: Text with Different Background -->
+    <section class="collapsible-section">
+      <h2 class="section-header">Text with Different Background</h2>
+      <div class="section-content">
+        <p class="good-contrast-text">
+          This block uses a semitransparent background color (rgba) to test text readability.
+        </p>
+        <p class="bad-contrast-text">
+          This block uses a semitransparent background color (rgba) to test text readability.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Execute DOM-related code after the page has loaded
+    document.addEventListener("DOMContentLoaded", function () {
+      // Set up collapsible sections; first section remains open
+      const sections = document.querySelectorAll(".collapsible-section");
+      sections.forEach(function (section, index) {
+        const header = section.querySelector(".section-header");
+        const content = section.querySelector(".section-content");
+        if (index !== 0) {
+          content.style.display = "none";
+        }
+        header.style.cursor = "pointer";
+        header.addEventListener("click", function () {
+          content.style.display = content.style.display === "none" ? "block" : "none";
+        });
+      });
+
+      // File upload functionality
       const allowedExtensions = ["pdf", "jpg", "jpeg", "png"];
-      // Disallowed file extensions (specifically .bat and .exe) 
       const disallowedExtensions = ["bat", "exe"];
-      document.getElementById('uploadButton').addEventListener('click', function () {
-        const fileInput = document.getElementById('fileInput');
-        const messageDiv = document.getElementById('message'); // Clear any previous messages 
-        messageDiv.textContent = ""; messageDiv.className = "";
+      const uploadButton = document.getElementById("uploadButton");
+      uploadButton.addEventListener("click", function () {
+        const fileInput = document.getElementById("fileInput");
+        const messageDiv = document.getElementById("message");
+        messageDiv.textContent = "";
+        messageDiv.className = "";
         if (fileInput.files.length === 0) {
           messageDiv.textContent = "Please choose a file first!";
           messageDiv.className = "error";
           return;
         }
-        const fileName = fileInput.files[0].name; const fileExt = fileName.split('.').pop().toLowerCase(); // Check for disallowed extensions and unsupported formats 
-        if (disallowedExtensions.includes(fileExt) || !allowedExtensions.includes(fileExt)) {
-          messageDiv.textContent = "Unsupported file type. Only PDF, JPG, JPEG, and PNG files are supported.";
+        const fileName = fileInput.files[0].name;
+        const fileExt = fileName.split(".").pop().toLowerCase();
+        if (
+          disallowedExtensions.includes(fileExt) ||
+          !allowedExtensions.includes(fileExt)
+        ) {
+          messageDiv.textContent =
+            "Unsupported file type. Only PDF, JPG, JPEG, and PNG files are supported.";
           messageDiv.className = "error";
-          // Optionally clear the file input if the file is invalid. 
           fileInput.value = "";
           return;
         }
-        // Dummy upload process (simulate success) 
-        messageDiv.textContent = "File upload simulated. File: " + fileName; messageDiv.className = "success"; // Optionally clear the file input after a successful dummy upload 
+        messageDiv.textContent = "File upload simulated. File: " + fileName;
+        messageDiv.className = "success";
         fileInput.value = "";
-      }); 
-    </script>
-    </p>
-    <hr>
+      });
 
-    <h2>Combobox / Dropdown</h2>
-    <p>
-      <select id="languageSelector" title="Select Language">
-        <option value="">Please choose an option</option>
-        <option value="option1">English</option>
-        <option value="option2">German</option>
-        <option value="option3">Hungarian</option>
-      </select>
-    </p>
-
-    <h2>Listbox</h2>
-    <p>
-      <!-- Listbox via a select with size attribute -->
-      <select id="listbox" size="4" title="list box example">
-        <option>Listbox Item 1</option>
-        <option>Listbox Item 2</option>
-        <option>Listbox Item 3</option>
-        <option>Listbox Item 4</option>
-      </select>
-    </p>
-
-    <h2>ListView</h2>
-    <p>
-      <!-- ListView using a select with multiple attribute -->
-      <select id="listview" multiple size="4" title="list view example">
-        <option>ListView Item 1</option>
-        <option>ListView Item 2</option>
-        <option>ListView Item 3</option>
-        <option>ListView Item 4</option>
-      </select>
-    </p>
-
-    <h2>Slider</h2>
-    <p>
-    <div>
-      <label for="mySlider">Select Value:</label>
-      <input type="range" id="mySlider" name="mySlider" min="0" max="100" value="50">
-      <output id="sliderValue" for="mySlider">50</output>
-    </div>
-    <script>
-      const slider = document.getElementById('mySlider');
-      const output = document.getElementById('sliderValue');
-
+      // Slider functionality
+      const slider = document.getElementById("mySlider");
+      const output = document.getElementById("sliderValue");
       output.textContent = slider.value;
-
-      slider.addEventListener('input', function () {
-
+      slider.addEventListener("input", function () {
         output.textContent = this.value;
       });
-    </script>
-    </p>
-
-    <hr>
-
-    <h2>Text with Different Background</h2>
-    <p class="good-contrast-text">
-      This block uses a semitransparent background color (rgba) to test text readability.
-    </p>
-    <p class="bad-contrast-text">
-      This block uses a semitransparent background color (rgba) to test text readability.
-    </p>
-
-  </div>
+    });
+  </script>
 </body>
 
 </html>
