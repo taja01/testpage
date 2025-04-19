@@ -43,6 +43,12 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    sections.forEach((section, index) => {
+        const headerText = section.querySelector(".section-header").textContent.trim();
+        const cleanText = headerText.toLowerCase().replace(/\s+/g, "-");
+        section.setAttribute("data-testid", cleanText);
+    });
+
     // File upload functionality 
     const allowedExtensions = ["pdf", "jpg", "jpeg", "png"];
     const disallowedExtensions = ["bat", "exe"];
