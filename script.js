@@ -19,6 +19,27 @@ function removeLastItem() {
     }
 }
 
+function addAttributeAfterDelay() {
+
+    setTimeout(function () {
+        var btn = document.getElementById("delayedButtonAttribute");
+        btn.setAttribute("data-clicked", "true");
+        btn.disabled = true;
+        console.log("Attribute added: data-clicked=true");
+    }, 3000);
+}
+
+function addClassAfterDelay() {
+
+    setTimeout(function () {
+        var btn = document.getElementById("delayedButtonClass");
+        btn.classList.add("myAddedClass");
+        console.log("Class 'myAddedClass' added to the button.");
+    }, 3000);
+}
+
+function disableMyButton() { document.getElementById("disableButton").disabled = true; }
+
 function generateErrorInConsole() { console.error("Generated error: Are you happy?"); }
 
 function validateEnglishInput() {
